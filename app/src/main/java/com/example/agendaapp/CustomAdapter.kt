@@ -38,7 +38,6 @@ class CustomAdapter(private val mList: List<ItemsViewModel>) : RecyclerView.Adap
         init {
             itemView.setOnClickListener{v : View ->
                 val position : Int = absoluteAdapterPosition
-                Toast.makeText(itemView.context, "Punchaste ${position}", Toast.LENGTH_SHORT).show()
                 intent.putExtra("VIVENCIA",position)
                 itemView.context.startActivity(intent)
             }

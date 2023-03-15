@@ -2,6 +2,7 @@ package com.example.agendaapp
 
 import CustomAdapter
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -22,36 +23,37 @@ class ListVivenciasActivity : AppCompatActivity() {
             onBackPressedDispatcher.onBackPressed()
         }
 
+        val recyclerview = binding.recyclerview
+
+        recyclerview.layoutManager = LinearLayoutManager(this)
+
+        val data = ArrayList<ItemsViewModel>()
+
+        fillList(data)
+        
+        val adapter = CustomAdapter(data)
+
+        if(data.isEmpty()){
+            binding.tvNotFound.visibility = View.VISIBLE
+        }
+        recyclerview.adapter = adapter
+
         binding.btnEliminarTodo.setOnClickListener{
             val builder = AlertDialog.Builder(this)
             builder.setTitle("Eliminar todas las vivencias")
                 .setMessage("¿Estas seguro de querer eliminar todo?")
                 .setCancelable(false)
                 .setPositiveButton("Sí") { dialog, which ->
-                    val nota = File(filesDir.absolutePath+"/notas/")
-                    val listaNota = nota.listFiles()
-                    val notaSize = listaNota.size - 1
-                    for(i in 0..notaSize){
-                        val archivo = File(filesDir.absolutePath+"/notas/"+listaNota[i].name)
-                        archivo.delete()
-                    }
+                    borrarVivencias()
 
-                    val image = File(filesDir.absolutePath+"/images/")
-                    val listaImage = image.listFiles()
-                    val imageSize = listaImage.size - 1
-                    for(i in 0..imageSize){
-                        val archivo = File(filesDir.absolutePath+"/images/"+listaImage[i].name)
-                        archivo.delete()
-                    }
+                    data.clear()
+                    val adapter = CustomAdapter(data)
 
-                    val audio = File(filesDir.absolutePath+"/audios/")
-                    val listaAudio = audio.listFiles()
-                    val audioSize = listaAudio.size - 1
-                    for(i in 0..audioSize){
-                        val archivo = File(filesDir.absolutePath+"/audios/"+listaAudio[i].name)
-                        archivo.delete()
+                    recyclerview.adapter = adapter
+
+                    if(data.isEmpty()){
+                        binding.tvNotFound.visibility = View.VISIBLE
                     }
-                    Toast.makeText(this, "¡Todas sus vivencias han sido eliminadas con exito!", Toast.LENGTH_SHORT).show()
                 }
                 .setNegativeButton("No") { dialog, which ->
                     Toast.makeText(this, "Tus notas no han sido borradas", Toast.LENGTH_SHORT).show()
@@ -60,14 +62,10 @@ class ListVivenciasActivity : AppCompatActivity() {
             val dialog = builder.create()
             dialog.show()
         }
+    }
 
-        val recyclerview = binding.recyclerview
-
-        recyclerview.layoutManager = LinearLayoutManager(this)
-
-        val data = ArrayList<ItemsViewModel>()
+    private fun fillList(data: ArrayList<ItemsViewModel>){
         val size = File(filesDir.absolutePath+"/notas/").listFiles().size - 1
-
         for (i in 0..size) {
             try{
                 val nota = File(filesDir.absolutePath+"/notas/")
@@ -78,13 +76,36 @@ class ListVivenciasActivity : AppCompatActivity() {
 
                     data.add(ItemsViewModel(name[0]))
                 }
-
             }catch (e:OutOfMemoryError) {
                 e.printStackTrace()
             }
         }
-        val adapter = CustomAdapter(data)
 
-        recyclerview.adapter = adapter
+    }
+    private fun borrarVivencias(){
+        val nota = File(filesDir.absolutePath+"/notas/")
+        val listaNota = nota.listFiles()
+        val notaSize = listaNota.size - 1
+        for(i in 0..notaSize){
+            val archivo = File(filesDir.absolutePath+"/notas/"+listaNota[i].name)
+            archivo.delete()
+        }
+
+        val image = File(filesDir.absolutePath+"/images/")
+        val listaImage = image.listFiles()
+        val imageSize = listaImage.size - 1
+        for(i in 0..imageSize){
+            val archivo = File(filesDir.absolutePath+"/images/"+listaImage[i].name)
+            archivo.delete()
+        }
+
+        val audio = File(filesDir.absolutePath+"/audios/")
+        val listaAudio = audio.listFiles()
+        val audioSize = listaAudio.size - 1
+        for(i in 0..audioSize){
+            val archivo = File(filesDir.absolutePath+"/audios/"+listaAudio[i].name)
+            archivo.delete()
+        }
+        Toast.makeText(this, "¡Todas sus vivencias han sido eliminadas con exito!", Toast.LENGTH_SHORT).show()
     }
 }
