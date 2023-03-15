@@ -3,7 +3,6 @@ package com.example.agendaapp
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.media.MediaRecorder
 import android.os.Build
 import android.os.Bundle
@@ -14,22 +13,30 @@ import androidx.activity.result.launch
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.core.net.toFile
 import com.example.agendaapp.databinding.ActivityMainBinding
 import java.io.File
 import java.io.FileOutputStream
-import java.net.URI
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityMainBinding
-    var mr: MediaRecorder = MediaRecorder()
+    private var mr: MediaRecorder = MediaRecorder()
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val dirNota = File(filesDir.absolutePath + "/notas/")
+        val dirImages = File(filesDir.absolutePath + "/images/")
+        val dirAudios = File(filesDir.absolutePath + "/audios/")
+
+        if(!dirNota.exists() && !dirImages.exists() && !dirAudios.exists()){
+            dirNota.mkdir()
+            dirImages.mkdir()
+            dirAudios.mkdir()
+        }
 
         val intent = Intent(this, ListVivenciasActivity::class.java)
 
