@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/tvLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Registro de Vivencia"
+        android:layout_centerHorizontal="true"
+        android:textSize="30dp"
+        android:textAlignment="textEnd"
+        android:gravity="bottom"
+        android:layout_margin="20dp"
+        tools:ignore="RtlCompat" />
+
+    <EditText
+        android:id="@+id/etTitulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Introduzca un titulo"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/tvLabel"/>
+
+    <com.santalu.maskara.widget.MaskEditText
+        android:id="@+id/etFecha"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="number"
+        android:hint="Introduzca una fecha"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/etTitulo"
+        android:layout_marginTop="20dp"
+        app:mask="__/__/____"
+        app:maskCharacter="_"
+        app:maskStyle="completable" />
+
+    <EditText
+        android:id="@+id/etDescripcion"
+        android:layout_width="wrap_content"
+        android:layout_height="84dp"
+        android:layout_below="@id/etFecha"
+        android:layout_centerHorizontal="true"
+        android:ems="10"
+        android:hint="Introduza detalles de su vivencia..."
+        android:gravity="start|top"
+        android:inputType="textMultiLine"
+        android:layout_marginTop="20dp"/>
+
+    <TextView
+        android:id="@+id/tvMic"
+        android:layout_width="133dp"
+        android:layout_height="36dp"
+        android:layout_below="@+id/etDescripcion"
+        android:layout_toLeftOf="@id/btnMic"
+        android:gravity="bottom|end"
+        android:text="Aquí va su audio..."
+        android:textAlignment="textEnd"
+        android:textSize="15dp"
+        android:layout_marginTop="20dp"/>
+
+    <ImageButton
+        android:id="@+id/btnMic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/baseline_mic"
+        android:layout_below="@id/etDescripcion"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"/>
+
+    <TextView
+        android:id="@+id/tvCamera"
+        android:layout_width="133dp"
+        android:layout_height="36dp"
+        android:layout_below="@+id/btnMic"
+        android:layout_toLeftOf="@id/btnCamera"
+        android:gravity="bottom|end"
+        android:text="Aquí va su foto..."
+        android:textAlignment="textEnd"
+        android:textSize="15dp"
+        android:layout_marginTop="20dp"/>
+
+    <ImageButton
+        android:id="@+id/btnCamera"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/baseline_camera_alt"
+        android:layout_below="@+id/btnMic"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"/>
+
+    <ImageButton
+        android:id="@+id/btnGallery"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/baseline_image_search"
+        android:layout_below="@+id/btnMic"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:layout_toRightOf="@id/btnCamera"/>
+
+    <Button
+        android:id="@+id/btnlista"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ver Lista"
+        android:layout_below="@+id/btnCamera"
+        android:layout_marginLeft="70dp"
+        android:layout_marginTop="20dp"/>
+
+    <Button
+        android:id="@+id/btnGuardar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Guardar"
+        android:layout_below="@+id/btnCamera"
+        android:layout_toRightOf="@id/btnlista"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="20dp"/>
+
+</RelativeLayout>
